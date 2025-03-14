@@ -1,4 +1,12 @@
+# Игнорировать виртуальное окружение
 .venv/
+venv/
+
+# Игнорировать файлы PyCharm
 .idea/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
