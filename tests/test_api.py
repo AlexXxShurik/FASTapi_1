@@ -63,7 +63,6 @@ def test_send_report():
 
 @pytest.mark.asyncio
 async def test_websocket_endpoint():
-    client = TestClient(app)
     with client.websocket_connect("/ws/tasks") as websocket:
         websocket.send_text("Test message")
         response = websocket.receive_text()
