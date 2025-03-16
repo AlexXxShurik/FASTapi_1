@@ -1,5 +1,4 @@
 from unittest.mock import patch
-
 import pytest
 import websockets
 from fastapi.testclient import TestClient
@@ -8,6 +7,7 @@ from app.models import Task
 from app.main import app
 
 client = TestClient(app)
+
 
 @pytest.fixture
 def test_task():
@@ -63,7 +63,8 @@ def test_send_report():
 
 @pytest.mark.asyncio
 async def test_websocket_endpoint():
-    async with websockets.connect("ws://localhost:8000/ws/tasks") as websocket:
-        await websocket.send("Test message")
-        response = await websocket.recv()
+    client = TestClient(app)
+    with client.websocket_connect("/ws/tasks") as websocket:
+        websocket.send_text("Test message")
+        response = websocket.receive_text()
         assert response == "Message received: Test message"
